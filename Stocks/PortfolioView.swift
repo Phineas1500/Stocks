@@ -1,0 +1,59 @@
+//
+//  PortfolioView.swift
+//  Stocks
+//
+//  Created by Sriram Kiron on 4/9/23.
+//
+
+import SwiftUI
+
+struct PortfolioView: View {
+    @Binding var stocksOwned: [Int]
+    @ObservedObject var stockManager: StockManager
+    @Binding var balance: Double
+
+    var body: some View {
+        VStack {
+            Spacer()
+            ForEach(stockManager.stocks.indices) { index in
+                let stock = stockManager.stocks[index]
+                let stockLabel = index == 0 ? "ABC" : "XYZ"
+                VStack {
+                    Text("Stock \(stockLabel) Owned: \(stocksOwned[index])")
+                        .font(.largeTitle)
+                        .padding()
+                    Text("Total Value of \(stockLabel): $\(Double(stocksOwned[index]) * stock.number, specifier: "%.2f")")
+                        .font(.largeTitle)
+                        .padding()
+                }
+            }
+            Text("Total Balance: $\(balance, specifier: "%.2f")")
+                .font(.largeTitle)
+                .padding()
+            Text("Overall Worth: $\(overallWorth(), specifier: "%.2f")")
+                .font(.largeTitle)
+                .padding()
+            Spacer()
+        }
+        .padding()
+        .navigationTitle("Portfolio")
+    }
+
+    private func overallWorth() -> Double {
+        var totalStockValue = 0.0
+        for i in stocksOwned.indices {
+            totalStockValue += Double(stocksOwned[i]) * stockManager.stocks[i].number
+        }
+        return balance + totalStockValue
+    }
+}
+
+struct PortfolioView_Previews: PreviewProvider {
+    @State static var stocksOwned = [0, 0]
+    static var stockManager = StockManager()
+    @State static var balance = 100000.0
+
+    static var previews: some View {
+        PortfolioView(stocksOwned: $stocksOwned, stockManager: stockManager, balance: $balance)
+    }
+}

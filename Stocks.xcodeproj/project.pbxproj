@@ -11,6 +11,9 @@
 		8080C19F29E3621600526A36 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8080C19E29E3621600526A36 /* ContentView.swift */; };
 		8080C1A129E3621800526A36 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8080C1A029E3621800526A36 /* Assets.xcassets */; };
 		8080C1A429E3621800526A36 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8080C1A329E3621800526A36 /* Preview Assets.xcassets */; };
+		8080C1AB29E3624800526A36 /* StockManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8080C1AA29E3624800526A36 /* StockManager.swift */; };
+		8080C1AD29E3627900526A36 /* PortfolioView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8080C1AC29E3627900526A36 /* PortfolioView.swift */; };
+		8080C1AF29E363C600526A36 /* Stock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8080C1AE29E363C600526A36 /* Stock.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -19,6 +22,9 @@
 		8080C19E29E3621600526A36 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		8080C1A029E3621800526A36 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		8080C1A329E3621800526A36 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		8080C1AA29E3624800526A36 /* StockManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StockManager.swift; sourceTree = "<group>"; };
+		8080C1AC29E3627900526A36 /* PortfolioView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PortfolioView.swift; sourceTree = "<group>"; };
+		8080C1AE29E363C600526A36 /* Stock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Stock.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -52,7 +58,10 @@
 			isa = PBXGroup;
 			children = (
 				8080C19C29E3621600526A36 /* StocksApp.swift */,
+				8080C1AA29E3624800526A36 /* StockManager.swift */,
 				8080C19E29E3621600526A36 /* ContentView.swift */,
+				8080C1AC29E3627900526A36 /* PortfolioView.swift */,
+				8080C1AE29E363C600526A36 /* Stock.swift */,
 				8080C1A029E3621800526A36 /* Assets.xcassets */,
 				8080C1A229E3621800526A36 /* Preview Content */,
 			);
@@ -139,6 +148,9 @@
 			files = (
 				8080C19F29E3621600526A36 /* ContentView.swift in Sources */,
 				8080C19D29E3621600526A36 /* StocksApp.swift in Sources */,
+				8080C1AB29E3624800526A36 /* StockManager.swift in Sources */,
+				8080C1AF29E363C600526A36 /* Stock.swift in Sources */,
+				8080C1AD29E3627900526A36 /* PortfolioView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -280,7 +292,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.example.Stocks;
+				PRODUCT_BUNDLE_IDENTIFIER = com.phineas.Stocks;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
@@ -309,7 +321,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.example.Stocks;
+				PRODUCT_BUNDLE_IDENTIFIER = com.phineas.Stocks;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
