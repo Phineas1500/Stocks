@@ -22,17 +22,21 @@ struct PortfolioView: View {
                     Text("Stock \(stockLabel) Owned: \(stocksOwned[index])")
                         .font(.largeTitle)
                         .padding()
+                        .minimumScaleFactor(0.5)
                     Text("Total Value of \(stockLabel): $\(Double(stocksOwned[index]) * stock.number, specifier: "%.2f")")
                         .font(.largeTitle)
                         .padding()
+                        .minimumScaleFactor(0.5)
                 }
             }
             Text("Total Balance: $\(balance, specifier: "%.2f")")
                 .font(.largeTitle)
                 .padding()
+                .minimumScaleFactor(0.5)
             Text("Overall Worth: $\(overallWorth(), specifier: "%.2f")")
                 .font(.largeTitle)
                 .padding()
+                .minimumScaleFactor(0.5)
             Spacer()
         }
         .padding()

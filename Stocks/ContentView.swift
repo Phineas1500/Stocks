@@ -48,9 +48,10 @@ struct ContentView: View {
     @ObservedObject var stockManager = StockManager()
     @State private var balance: Double = 100_000
     @State private var stocksToBuy: [Int] = [1, 1]
-    @State private var showInsufficientBalance: Bool = false
-    @State private var showError: Bool = false
+    @State private var showInsufficientBalance: [Bool] = [false, false]
+    @State private var showError: [Bool] = [false, false]
     @State private var stocksOwned: [Int] = [0, 0]
+    @State private var showExcessStockSaleError: [Bool] = [false, false]
 
     var body: some View {
         NavigationView {
@@ -69,13 +70,18 @@ struct ContentView: View {
                         Text("\(stockLabel): $\(stock.number, specifier: "%.2f")")
                             .font(.largeTitle)
                             .padding()
-                        if showInsufficientBalance {
+                        if showInsufficientBalance[index] {
                             Text("Insufficient balance")
                                 .foregroundColor(.red)
                                 .padding(.bottom)
                         }
-                        if showError {
+                        if showError[index] {
                             Text("Minimum stocks to buy is 1")
+                                .foregroundColor(.red)
+                                .padding(.bottom)
+                        }
+                        if showExcessStockSaleError[index] {
+                            Text("You can't sell more stocks than you own.")
                                 .foregroundColor(.red)
                                 .padding(.bottom)
                         }
@@ -139,17 +145,21 @@ struct ContentView: View {
 
     private func purchaseStock(stockIndex: Int) {
         if stocksToBuy[stockIndex] < 1 {
-            showError = true
+            showError[stockIndex] = true
+            showInsufficientBalance[stockIndex] = false
+            showExcessStockSaleError[stockIndex] = false
         } else {
             let totalCost = stockManager.stocks[stockIndex].number * Double(stocksToBuy[stockIndex])
             if balance >= totalCost {
                 balance -= totalCost
                 stocksOwned[stockIndex] += stocksToBuy[stockIndex]
-                showInsufficientBalance = false
-                showError = false
+                showInsufficientBalance[stockIndex] = false
+                showError[stockIndex] = false
+                showExcessStockSaleError[stockIndex] = false
             } else {
-                showInsufficientBalance = true
-                showError = false
+                showInsufficientBalance[stockIndex] = true
+                showError[stockIndex] = false
+                showExcessStockSaleError[stockIndex] = false
             }
         }
     }
@@ -160,8 +170,11 @@ struct ContentView: View {
             let totalValue = stockManager.stocks[stockIndex].number * Double(stocksToBuy[stockIndex])
             balance += totalValue
             stocksOwned[stockIndex] -= stocksToBuy[stockIndex]
+            showError[stockIndex] = false
+            showInsufficientBalance[stockIndex] = false
+            showExcessStockSaleError[stockIndex] = false
         } else {
-            print("You can't sell more stocks than you own.")
+            showExcessStockSaleError[stockIndex] = true
         }
     }
 
@@ -172,4 +185,3 @@ struct ContentView_Previews: PreviewProvider {
         ContentView()
     }
 }
-
