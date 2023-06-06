@@ -47,87 +47,31 @@ import SwiftUI
 struct ContentView: View {
     @ObservedObject var stockManager = StockManager()
     @State private var balance: Double = 100_000
-    @State private var stocksToBuy: [Int] = [1, 1]
-    @State private var showInsufficientBalance: [Bool] = [false, false]
-    @State private var showError: [Bool] = [false, false]
-    @State private var stocksOwned: [Int] = [0, 0]
-    @State private var showExcessStockSaleError: [Bool] = [false, false]
 
     var body: some View {
         NavigationView {
-            VStack {
-                HStack {
-                    Spacer()
-                    Text("Balance: $\(balance, specifier: "%.2f")")
-                        .font(.title2)
-                        .padding()
-                }
-                Spacer()
-                ForEach(stockManager.stocks.indices) { index in
-                    let stock = stockManager.stocks[index]
-                    let stockLabel = index == 0 ? "ABC" : "XYZ"
-                    VStack {
-                        Text("\(stockLabel): $\(stock.number, specifier: "%.2f")")
-                            .font(.largeTitle)
-                            .padding()
-                        if showInsufficientBalance[index] {
-                            Text("Insufficient balance")
-                                .foregroundColor(.red)
-                                .padding(.bottom)
-                        }
-                        if showError[index] {
-                            Text("Minimum stocks to buy is 1")
-                                .foregroundColor(.red)
-                                .padding(.bottom)
-                        }
-                        if showExcessStockSaleError[index] {
-                            Text("You can't sell more stocks than you own.")
-                                .foregroundColor(.red)
-                                .padding(.bottom)
-                        }
+            List {
+                Text("Balance: $\(balance, specifier: "%.2f")")
+                    .font(.title2)
+                    .padding()
+                
+                ForEach(stockManager.stocks.indices, id: \.self) { index in
+                    NavigationLink(destination: StockDetailView(stockIndex: index,
+                                                                balance: $balance,
+                                                                stockManager: stockManager)) {
                         HStack {
-                            Stepper("", value: $stocksToBuy[index], in: 1...Int.max)
-                                .labelsHidden()
-                                .fixedSize(horizontal: true, vertical: false)
-                            VStack(alignment: .leading, spacing: 8) {
-                                Text("Stocks to buy:")
-                                    .font(.title3)
-                                NumberTextField(value: $stocksToBuy[index])
-                                    .textFieldStyle(RoundedBorderTextFieldStyle())
-                                    .frame(width: 60)
-                                    .multilineTextAlignment(.trailing)
-                            }
-                        }
-                        .padding(.bottom)
-                        HStack {
-                            Button(action: {
-                                purchaseStock(stockIndex: index)
-                            }) {
-                                Text("Buy Stock")
-                                    .font(.title2)
-                                    .padding()
-                                    .background(Color.green)
-                                    .foregroundColor(.white)
-                                    .cornerRadius(10)
-                            }
-                            .disabled(stock.number == 0)
-
-                            Button(action: {
-                                sellStock(stockIndex: index)
-                            }) {
-                                Text("Sell Stock")
-                                    .font(.title2)
-                                    .padding()
-                                    .background(Color.red)
-                                    .foregroundColor(.white)
-                                    .cornerRadius(10)
-                            }
-                            .disabled(stocksOwned[index] < 1)
+                            Text(stockManager.stocks[index].id)
+                            Spacer()
+                            Text("$\(stockManager.stocks[index].number, specifier: "%.2f")")
+                            Spacer()
+                            Text("Owned: \(stockManager.stocksOwned[index])")
                         }
                     }
                 }
-                Spacer()
-                NavigationLink(destination: PortfolioView(stocksOwned: $stocksOwned, stockManager: stockManager, balance: $balance)) {
+
+                NavigationLink(destination: PortfolioView(stocksOwned: $stockManager.stocksOwned,
+                                                          stockManager: stockManager,
+                                                          balance: $balance)) {
                     Text("View Portfolio")
                         .font(.title2)
                         .padding()
@@ -135,49 +79,11 @@ struct ContentView: View {
                         .foregroundColor(.white)
                         .cornerRadius(10)
                 }
-                .padding(.top)
-                Spacer()
+
             }
-            .padding()
             .navigationTitle("Stock Market")
         }
     }
-
-    private func purchaseStock(stockIndex: Int) {
-        if stocksToBuy[stockIndex] < 1 {
-            showError[stockIndex] = true
-            showInsufficientBalance[stockIndex] = false
-            showExcessStockSaleError[stockIndex] = false
-        } else {
-            let totalCost = stockManager.stocks[stockIndex].number * Double(stocksToBuy[stockIndex])
-            if balance >= totalCost {
-                balance -= totalCost
-                stocksOwned[stockIndex] += stocksToBuy[stockIndex]
-                showInsufficientBalance[stockIndex] = false
-                showError[stockIndex] = false
-                showExcessStockSaleError[stockIndex] = false
-            } else {
-                showInsufficientBalance[stockIndex] = true
-                showError[stockIndex] = false
-                showExcessStockSaleError[stockIndex] = false
-            }
-        }
-    }
-
-    private func sellStock(stockIndex: Int) {
-        // Check if user owns enough stocks to sell
-        if stocksToBuy[stockIndex] <= stocksOwned[stockIndex] {
-            let totalValue = stockManager.stocks[stockIndex].number * Double(stocksToBuy[stockIndex])
-            balance += totalValue
-            stocksOwned[stockIndex] -= stocksToBuy[stockIndex]
-            showError[stockIndex] = false
-            showInsufficientBalance[stockIndex] = false
-            showExcessStockSaleError[stockIndex] = false
-        } else {
-            showExcessStockSaleError[stockIndex] = true
-        }
-    }
-
 }
 
 struct ContentView_Previews: PreviewProvider {
