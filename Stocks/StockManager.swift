@@ -11,10 +11,20 @@ class StockManager: ObservableObject {
     private var timer: Timer? = nil
 
     let stockIds = [
-        "7e153615-1f25-4539-a595-db7e0d26cc2c",
-        "57e5b4ec-2b71-43c8-a475-56ce7b647d07",
-        "578a5aaf-79cb-4a06-85e1-dec882e90faf"
+        "6f544619-ece3-44fa-b1d9-9a26d0011f7a",
+        "4d1b94a1-4e0e-4851-bfb4-b9ed4c26c9bf",
+        "be383b41-ca73-463d-9ac2-e9b844299900"
     ]
+    
+    let stockNames = [
+        "6f544619-ece3-44fa-b1d9-9a26d0011f7a": "ABC",
+        "4d1b94a1-4e0e-4851-bfb4-b9ed4c26c9bf": "XYZ",
+        "be383b41-ca73-463d-9ac2-e9b844299900": "MMM"
+    ]
+
+    func stockLabelFor(id: String) -> String {
+        return stockNames[id] ?? "Unknown"
+    }
 
     init() {
         self.stocksOwned = Array(repeating: 0, count: stockIds.count) // Initialize stocksOwned with correct length

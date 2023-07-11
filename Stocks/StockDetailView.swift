@@ -13,7 +13,7 @@ struct StockDetailView: View {
 
     var body: some View {
         VStack {
-            Text("\(stockManager.stocks[stockIndex].id): $\(stockManager.stocks[stockIndex].number, specifier: "%.2f")")
+            Text("\(stockManager.stockLabelFor(id: stockManager.stocks[stockIndex].id)): $\(stockManager.stocks[stockIndex].number, specifier: "%.2f")")
                 .font(.largeTitle)
                 .padding()
             if showInsufficientBalance {

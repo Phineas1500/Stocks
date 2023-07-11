@@ -17,7 +17,7 @@ struct PortfolioView: View {
             Spacer()
             ForEach(stockManager.stocks.indices) { index in
                 let stock = stockManager.stocks[index]
-                let stockLabel = stockLabelFor(index: index)
+                let stockLabel = stockManager.stockLabelFor(id: stockManager.stocks[index].id)
                 VStack {
                     Text("Stock \(stockLabel) Owned: \(stocksOwned[index])")
                         .font(.largeTitle)

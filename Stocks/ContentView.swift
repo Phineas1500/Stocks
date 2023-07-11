@@ -60,7 +60,7 @@ struct ContentView: View {
                                                                 balance: $balance,
                                                                 stockManager: stockManager)) {
                         HStack {
-                            Text(stockManager.stocks[index].id)
+                            Text(stockManager.stockLabelFor(id: stockManager.stocks[index].id))
                             Spacer()
                             Text("$\(stockManager.stocks[index].number, specifier: "%.2f")")
                             Spacer()
