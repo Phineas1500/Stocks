@@ -11,15 +11,15 @@ class StockManager: ObservableObject {
     private var timer: Timer? = nil
 
     let stockIds = [
-        "6f544619-ece3-44fa-b1d9-9a26d0011f7a",
-        "4d1b94a1-4e0e-4851-bfb4-b9ed4c26c9bf",
-        "be383b41-ca73-463d-9ac2-e9b844299900"
+        "55c7601f-8c89-403c-8561-ee1d54689010",
+        "b68de4c0-3bc8-431a-b697-5e8a90749979",
+        "968a2c1c-611f-406d-9f6e-bda2bd94fcc3"
     ]
     
     let stockNames = [
-        "6f544619-ece3-44fa-b1d9-9a26d0011f7a": "ABC",
-        "4d1b94a1-4e0e-4851-bfb4-b9ed4c26c9bf": "XYZ",
-        "be383b41-ca73-463d-9ac2-e9b844299900": "MMM"
+        "55c7601f-8c89-403c-8561-ee1d54689010": "ABC",
+        "b68de4c0-3bc8-431a-b697-5e8a90749979": "XYZ",
+        "968a2c1c-611f-406d-9f6e-bda2bd94fcc3": "MMM"
     ]
 
     func stockLabelFor(id: String) -> String {
@@ -78,9 +78,9 @@ class StockManager: ObservableObject {
                     guard let self = self else { return }
                     if index >= self.stocks.count {
                         self.stocks.append(updatedStock)
-                        self.stocksOwned.append(0)
                     } else {
-                        self.stocks[index] = updatedStock
+                        self.stocks[index].lastNumber = self.stocks[index].number
+                        self.stocks[index].number = updatedStock.number
                     }
                 }
                 .store(in: &cancellables)

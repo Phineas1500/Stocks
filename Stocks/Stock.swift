@@ -8,9 +8,11 @@
 struct Stock: Identifiable, Decodable {
     let id: String
     var number: Double
+    var lastNumber: Double?  // Add this field
 
-    init(id: String, number: Double) {
+    init(id: String, number: Double, lastNumber: Double? = nil) {
         self.id = id
         self.number = number
+        self.lastNumber = lastNumber
     }
 }

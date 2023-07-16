@@ -17,7 +17,7 @@ struct PortfolioView: View {
             Spacer()
             ForEach(stockManager.stocks.indices) { index in
                 let stock = stockManager.stocks[index]
-                let stockLabel = stockManager.stockLabelFor(id: stockManager.stocks[index].id)
+                let stockLabel = stockManager.stockLabelFor(id: stock.id)
                 VStack {
                     Text("Stock \(stockLabel) Owned: \(stocksOwned[index])")
                         .font(.largeTitle)
@@ -27,6 +27,7 @@ struct PortfolioView: View {
                         .font(.largeTitle)
                         .padding()
                         .minimumScaleFactor(0.5)
+                        .foregroundColor(stock.number > (stock.lastNumber ?? 0) ? .green : .red)
                 }
             }
             Text("Total Balance: $\(balance, specifier: "%.2f")")
@@ -41,19 +42,6 @@ struct PortfolioView: View {
         }
         .padding()
         .navigationTitle("Portfolio")
-    }
-
-    private func stockLabelFor(index: Int) -> String {
-        switch index {
-        case 0:
-            return "ABC"
-        case 1:
-            return "XYZ"
-        case 2:
-            return "MMM"
-        default:
-            return "Unknown"
-        }
     }
 
     private func overallWorth() -> Double {

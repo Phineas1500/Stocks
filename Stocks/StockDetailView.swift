@@ -16,6 +16,7 @@ struct StockDetailView: View {
             Text("\(stockManager.stockLabelFor(id: stockManager.stocks[stockIndex].id)): $\(stockManager.stocks[stockIndex].number, specifier: "%.2f")")
                 .font(.largeTitle)
                 .padding()
+                .foregroundColor(stockManager.stocks[stockIndex].number > stockManager.stocks[stockIndex].lastNumber ?? 0 ? .green : .red)
             if showInsufficientBalance {
                 Text("Insufficient balance")
                     .foregroundColor(.red)

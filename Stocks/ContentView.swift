@@ -47,6 +47,7 @@ import SwiftUI
 struct ContentView: View {
     @ObservedObject var stockManager = StockManager()
     @State private var balance: Double = 100_000
+    @State private var lastBalance: Double = 100_000
 
     var body: some View {
         NavigationView {
@@ -54,7 +55,7 @@ struct ContentView: View {
                 Text("Balance: $\(balance, specifier: "%.2f")")
                     .font(.title2)
                     .padding()
-                
+
                 ForEach(stockManager.stocks.indices, id: \.self) { index in
                     NavigationLink(destination: StockDetailView(stockIndex: index,
                                                                 balance: $balance,
@@ -63,6 +64,7 @@ struct ContentView: View {
                             Text(stockManager.stockLabelFor(id: stockManager.stocks[index].id))
                             Spacer()
                             Text("$\(stockManager.stocks[index].number, specifier: "%.2f")")
+                                .foregroundColor(stockManager.stocks[index].number > (stockManager.stocks[index].lastNumber ?? 0) ? .green : .red)
                             Spacer()
                             Text("Owned: \(stockManager.stocksOwned[index])")
                         }
@@ -82,6 +84,10 @@ struct ContentView: View {
 
             }
             .navigationTitle("Stock Market")
+        }
+        .onChange(of: balance) { newValue in
+            lastBalance = balance
+            balance = newValue
         }
     }
 }
